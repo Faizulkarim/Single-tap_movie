@@ -42,7 +42,8 @@ extension APIEndpoint: EndPointType {
     var task: HTTPTask {
         switch self {
         case .movieList(let params):
-          return .requestParametersAndHeaders(bodyParameters: nil, bodyEncoding: .jsonEncoding, urlParameters: params, additionHeaders: headers)
+            print(params)
+          return .requestParametersAndHeaders(bodyParameters: nil, bodyEncoding: .urlEncoding, urlParameters: params, additionHeaders: nil)
         }
     }
     

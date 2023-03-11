@@ -32,13 +32,12 @@ final class LaunchSequencer {
         installRootView()
     }
     
-    #if DEBUG || ALPHA || BETA
 
     func relaunch() {
         installRootView()
     }
 
-    #endif
+
     
     private func installRootView() {
         
@@ -46,16 +45,10 @@ final class LaunchSequencer {
         appView.navigationController?.navigationBar.isHidden = true
         self.rootWindow?.rootViewController = appView
         self.rootWindow?.makeKeyAndVisible()
-       
-        setStatusBar(backgroundColor: dependencyManager.theme().colorTheme.clearColor)
+
 
     }
     
-    func changeRootTo(navigationController: UINavigationController) {
-        self.rootWindow?.rootViewController = navigationController
-        self.rootWindow?.makeKeyAndVisible()
-       setStatusBar(backgroundColor: dependencyManager.theme().colorTheme.clearColor)
-    }
     
 
     

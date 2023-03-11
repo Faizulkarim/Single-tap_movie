@@ -15,6 +15,7 @@ final class HomeViewController: BaseHomeViewController {
     // MARK: Variables
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var HomeSearchBar : UISearchBar!
     
     private var router: HomeRouter?
     private let viewModel: HomeViewModelType
@@ -45,9 +46,9 @@ final class HomeViewController: BaseHomeViewController {
         bind(to: viewModel)
         setupRouter()
         viewDidLoadSubject.send()
-        
-        let params: Parameters = ["api_key": "ss", "query": "marvel"]
-        self.movieListApiSubject.send(params)
+        HomeSearchBar.delegate = self
+
+        self.movieList(name: "marvel")
         
     }
     
@@ -65,6 +66,10 @@ private extension HomeViewController {
     /// Setup UI
     private func setupUI() {
         tableView.registerCell(HomeTableCell.self)
+    }
+    private func movieList(name: String){
+        let params: Parameters = ["api_key": "6c5d81c11842804290245b441aa39b0c", "query": name]
+        self.movieListApiSubject.send(params)
     }
 
     /// Bind viewmodel
@@ -89,7 +94,6 @@ private extension HomeViewController {
         case .apiFailure(customError: let customError):
             print(customError)
         case .apiSuccess(response: let response):
-            print(response)
             displayModel.movieData = response
             self.tableView.reloadData()
         }
@@ -130,15 +134,23 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        return displayModel.movieData?.results?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableCell.nameId) as! HomeTableCell
-        cell.theme = theme
-        cell.indexPath = indexPath
-        cell.configureCell()
-        return cell
+        if let displayModel = displayModel.dataSource[0] as? MoviewListCellViewModel{
+            let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableCell.nameId) as! HomeTableCell
+            cell.theme = theme
+            cell.indexPath = indexPath
+            let posterPath = displayModel.movieLists[indexPath.row].posterPath
+            let posterImageUrl = "\(displayModel.posterBaseUrl ?? "")" + "\(posterPath ?? "")"
+            let title = displayModel.movieLists[indexPath.row].title ?? ""
+            let descripton = displayModel.movieLists[indexPath.row].overview ?? ""
+            cell.configureCell(baseUrl: displayModel.posterBaseUrl ?? "",posterImage: posterPath, movieTitle: title, movieDescription: descripton)
+            return cell
+        }
+        
+     return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -150,3 +162,28 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
 }
+
+extension HomeViewController: UISearchBarDelegate {
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // This method is called when the user taps the search button on the keyboard.
+        // Perform your search logic here.
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // This method is called when the user changes the search text.
+        // You can use this method to perform real-time search as the user types.
+        if searchText.count > 2 {
+            self.movieList(name: searchText)
+        }else if searchText.count == 0 {
+            self.movieList(name: "Marvel")
+        }
+      
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // This method is called when the user taps the cancel button on the search bar.
+        // Clear your search results and dismiss the keyboard here.
+    }
+}
+

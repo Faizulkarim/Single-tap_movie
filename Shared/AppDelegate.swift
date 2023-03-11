@@ -33,27 +33,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window!.overrideUserInterfaceStyle = .light
         let environment: AppEnvironment = AppEnvironment.bootstrap(rootWindow: window)
         dependencyManager = environment.dependencyManager
-        if environmentForLaunch() == .dev {
-            environment.startApp(environment: environmentForLaunch())
-        } else {
-            environment.startApp(environment: environmentForLaunch())
-        }
+        environment.startApp(environment: .dev)
+   
         return true
     }
 
 
 
     
-    // MARK: - Private Functions
-    private func environmentForLaunch() -> OTEnvironment {
-        #if BETA || ALPHA
-        return .staging
-        #elseif DEBUG
-        return .dev
-        #else
-        return .production
-        #endif
-    }
+
 
 
 }

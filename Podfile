@@ -8,6 +8,7 @@ target 'Single-tap-Movie' do
   pod 'SwiftMessages'
   pod 'IQKeyboardManagerSwift'
 
+  pod 'SDWebImage'
   # Pods forSingle-tap-Movie
 
 end

@@ -15,14 +15,13 @@ import Foundation
 public enum OTEnvironment: String {
     case dev = "Dev"
     case staging = "Staging"
-    case beta = "Beta"
-    case production = "Production"
+
     
     /// All environments.
     ///
     /// - Returns: All environments.
     public static func allEnvironments() -> [OTEnvironment] {
-        return [.dev, .staging, .beta, .production]
+        return [.dev, .staging]
     }
     
     /// API key for the environment.
@@ -34,10 +33,7 @@ public enum OTEnvironment: String {
             return ""
         case .staging:
             return ""
-        case .beta:
-            return ""
-        case .production:
-            return ""
+
         }
     }
     
@@ -46,18 +42,12 @@ public enum OTEnvironment: String {
     /// - Returns: Base URL.
     public func baseURLString(apiEndPoint: APIEndpoint) -> String  {
         switch apiEndPoint {
-//        case .googleMapAPIS:
-//            return Constants.kGMAPS
         default :
             switch self {
             case .dev:
                 return Constants.kDEV
             case .staging:
-                return Constants.kUAT
-            case .beta:
-                return Constants.kBETA
-            case .production:
-                return Constants.kPROD
+                return Constants.kDEV
             }
         }
         

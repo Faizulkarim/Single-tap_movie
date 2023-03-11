@@ -11,7 +11,7 @@ import UIKit
 final class OTDependencyManager {
     static var defaultValue: OTDependencyManager { Self.default }
     
-    private var environment: OTEnvironment = .production
+    private var environment: OTEnvironment = .dev
     private var rootWindow: UIWindow?
     
     private var _launchSequencer: LaunchSequencer?
@@ -35,12 +35,12 @@ extension OTDependencyManager: DependencyManager {
     
     func startServices() {
                 
-        #if DEBUG || ALPHA || BETA
+        #if DEBUG 
         //
         #endif
     }
     
-    #if DEBUG || ALPHA || BETA
+    #if DEBUG
     
     ///  Re-configured dependency manager with the new environement.
     ///

@@ -22,11 +22,12 @@ struct HomeDisplayModel {
     
     mutating func loadCellViewModel(){
         dataSource.removeAll()
-        self.dataSource.append(MoviewListCellViewModel(movieList: movieData?.results ?? []))
+        self.dataSource.append(MoviewListCellViewModel(movieLists: movieData?.results ?? [], posterBaseUrl: "https://api.themoviedb.org/"))
     }
     
 }
 
 struct MoviewListCellViewModel: HomePassableModel {
-    var movieList : [Movie]
+    var movieLists : [Movie]
+    var posterBaseUrl: String?
 }

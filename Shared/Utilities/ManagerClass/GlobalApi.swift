@@ -95,11 +95,11 @@ func getAppEnvironment() -> OTEnvironment {
     #endif
 }
 
-func setStatusBar(backgroundColor: UIColor?) {
-    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-    let statusBar = UIView(frame: window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero)
-    statusBar.backgroundColor = backgroundColor
-    window?.addSubview(statusBar)
-    window?.bringSubviewToFront(statusBar)
-}
+//func setStatusBar(backgroundColor: UIColor?) {
+//    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+//    let statusBar = UIView(frame: window?.windowScene?.statusBarManager?.statusBarFrame ?? CGRect.zero)
+//    statusBar.backgroundColor = backgroundColor
+//    window?.addSubview(statusBar)
+//    window?.bringSubviewToFront(statusBar)
+//}
 

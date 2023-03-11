@@ -21,29 +21,5 @@ extension BaseNavigationViewController {
     
 }
 
-extension BaseNavigationViewController: BottomPopupManageable {
-    func updateBottomPopup() -> BottomPopupVariables {
-        if let popupManageable = self.viewControllers.first as? BottomPopupManageable {
-            return popupManageable.updateBottomPopup()
-        }
-        return BottomPopupVariables(pageHeight: UIScreen.main.bounds.size.height-80, isPanGestureEnable: false)
-    }
 
-}
-
-extension BaseNavigationViewController: CenterPopupManageable {
-    
-    func updateCenterPopup() -> CenterPopupVariables {
-        if let popupManageable = self.viewControllers.first as? CenterPopupManageable {
-            return popupManageable.updateCenterPopup()
-        }
-        let width: CGFloat = 400
-        let height: CGFloat = 560
-        let mainScreen = UIScreen.main.bounds
-        let x = mainScreen.size.width/2 - width/2
-        let y = mainScreen.size.height/2 - height/2
-        let frame = CGRect(x: x, y: y, width: width, height: height)
-        return CenterPopupVariables(animationPopupFrame: frame)
-    }
-}
 

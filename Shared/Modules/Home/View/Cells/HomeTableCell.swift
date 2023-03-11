@@ -13,7 +13,7 @@ protocol HomeTableCellDelegate: AnyObject {}
 class HomeTableCell: BaseTableViewCell {
     
     @IBOutlet weak var baseView: UIView!
-    @IBOutlet weak var posterImage : UIView!
+    @IBOutlet weak var posterImage : UIImageView!
     @IBOutlet weak var movieTitle : UILabel!
     @IBOutlet weak var movieDescription : UILabel!
     weak var delegate: HomeTableCellDelegate?
@@ -22,14 +22,11 @@ class HomeTableCell: BaseTableViewCell {
         super.awakeFromNib()
     }
     
-    func configureCell() {
-        setupUI()
+    func configureCell(baseUrl : String,posterImage: String?, movieTitle: String?, movieDescription: String?) {
+        self.posterImage.loadImage(baseUrl: baseUrl, fileName: posterImage)
+        self.movieTitle.text = movieTitle
+        self.movieDescription.text = movieDescription
     }
 }
 
-//MARK: Cell Configuration
-extension HomeTableCell {
-    
-    func setupUI(){}
-    
-}
+
